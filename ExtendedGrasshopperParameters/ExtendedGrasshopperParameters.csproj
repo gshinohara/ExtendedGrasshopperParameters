@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <Version>1.0</Version>
+    <Title>ExtendedGrasshopperParameters</Title>
+    <Description>Description of ExtendedGrasshopperParameters</Description>
+    <TargetExt>.gha</TargetExt>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Grasshopper" Version="7.28.23058.3001" IncludeAssets="compile;build" />
+    <PackageReference Include="RhinoCommon" Version="7.28.23058.3001" />
+  </ItemGroup>
+
+</Project>
