@@ -30,6 +30,52 @@ namespace ExtendedGrasshopperParameters.Common
 
         internal Guid ReferenceID => _guid;
         internal bool IsReferenced => ReferenceID != Guid.Empty;
+        internal string Name
+        {
+            get
+            {
+                if (IsReferenced)
+                    return _viewInfo.Name;
+                else
+                {
+                    switch (_type)
+                    {
+                        case ViewType.RhinoView:
+                            return RhinoDoc.ActiveDoc.Views.Find(ReferenceID).ActiveViewport.Name;
+                        case ViewType.RhinoPageView:
+                            return RhinoDoc.ActiveDoc.Views.Find(ReferenceID).ActiveViewport.Name;
+                        default:
+                            return null;
+                    }
+                }
+            }
+        }
+        internal DefinedViewportProjection Projection
+        {
+            get
+            {
+                if (IsReferenced)
+                    return _projection;
+                else
+                    switch (_type)
+                    {
+                        case ViewType.RhinoView:
+                            var viewport = RhinoDoc.ActiveDoc.Views.Find(ReferenceID).ActiveViewport;
+                            if (viewport.IsPlanView)
+                                return DefinedViewportProjection.Top;
+                            else if (viewport.IsPerspectiveProjection)
+                                return DefinedViewportProjection.Perspective;
+                            else if (viewport.IsTwoPointPerspectiveProjection)
+                                return DefinedViewportProjection.TwoPointPerspective;
+                            else
+                                return DefinedViewportProjection.None;
+                        case ViewType.RhinoPageView:
+                            return DefinedViewportProjection.None;
+                        default:
+                            return DefinedViewportProjection.None;
+                    }
+            }
+        }
         public override string ToString() => _type.ToString();
 
         internal void Push(RhinoDoc doc)
@@ -49,7 +95,7 @@ namespace ExtendedGrasshopperParameters.Common
         private void PushRhinoView(RhinoDoc doc)
         {
             var views = doc.Views;
-            var view = views.Add(_viewInfo.Name, _projection, default, false);
+            var view = views.Add(Name, _projection, default, false);
             view.Maximized = true;
         }
         private void PushNamedView(RhinoDoc doc)

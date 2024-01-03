@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Rhino.Display;
 using Rhino.Input;
 using Rhino.Input.Custom;
 
@@ -8,6 +9,8 @@ using Grasshopper.Kernel;
 
 using ExtendedGrasshopperParameters.Types;
 using ExtendedGrasshopperParameters.Common;
+using Rhino;
+using Grasshopper.Kernel.Parameters;
 
 namespace ExtendedGrasshopperParameters.Parameters
 {
@@ -33,14 +36,31 @@ namespace ExtendedGrasshopperParameters.Parameters
                     switch ((ViewType)go.Option().CurrentListOptionIndex)
                     {
                         case ViewType.RhinoView:
+                            if (go.View() is RhinoPageView)
+                            {
+                                RhinoApp.WriteLine($"You cannot set a {ViewType.RhinoPageView} as a {ViewType.RhinoView}.");
+                                value = new GH_VariousView();
+                                return GH_GetterResult.cancel;
+                            }
                             view = new VariousView(ViewType.RhinoView, go.View().ActiveViewportID);
                             break;
+                        case ViewType.RhinoPageView:
+                            if (!(go.View() is RhinoPageView))
+                            {
+                                RhinoApp.WriteLine($"You cannot set a {ViewType.RhinoView} as a {ViewType.RhinoPageView}.");
+                                value = new GH_VariousView();
+                                return GH_GetterResult.cancel;
+                            }
+                            view = new VariousView(ViewType.RhinoPageView,go.View().ActiveViewportID);
+                            break;
                         default:
+                            value = new GH_VariousView();
                             return GH_GetterResult.cancel;
                     }
                     value = new GH_VariousView(view);
                     return GH_GetterResult.success;
                 default:
+                    value = new GH_VariousView();
                     return GH_GetterResult.cancel;
             }
             
