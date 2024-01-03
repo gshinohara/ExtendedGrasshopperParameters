@@ -22,6 +22,11 @@ namespace ExtendedGrasshopperParameters.Common
             vp.SetCameraLocations(camera.To, camera.To);
             _viewInfo = new ViewInfo(vp) { Name = name };
         }
+        internal VariousView(ViewType type, Guid id)
+        {
+            _type = type;
+            _guid = id;
+        }
 
         internal Guid ReferenceID => _guid;
         internal bool IsReferenced => ReferenceID != Guid.Empty;
@@ -54,6 +59,7 @@ namespace ExtendedGrasshopperParameters.Common
     }
     internal enum ViewType
     {
+        None,
         RhinoView,
         RhinoPageView,
         DetailView,

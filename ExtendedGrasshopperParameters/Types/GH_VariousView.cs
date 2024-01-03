@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Rhino.Display;
-
 using Grasshopper.Kernel.Types;
 using ExtendedGrasshopperParameters.Common;
 
@@ -15,10 +13,10 @@ namespace ExtendedGrasshopperParameters.Types
 
         public override bool IsValid => throw new System.NotImplementedException();
         public override string TypeDescription => throw new NotImplementedException();
-        public override string TypeName => throw new NotImplementedException();
+        public override string TypeName => "View";
         public override IGH_Goo Duplicate()
         {
-            throw new NotImplementedException();
+            return new GH_VariousView(this);
         }
         public override string ToString()
         {

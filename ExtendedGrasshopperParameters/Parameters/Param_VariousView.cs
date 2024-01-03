@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-using Rhino;
-using Rhino.Geometry;
-using Rhino.DocObjects;
+using Rhino.Input;
+using Rhino.Input.Custom;
 
 using Grasshopper.Kernel;
 
 using ExtendedGrasshopperParameters.Types;
-using System;
+using ExtendedGrasshopperParameters.Common;
 
 namespace ExtendedGrasshopperParameters.Parameters
 {
@@ -23,7 +23,27 @@ namespace ExtendedGrasshopperParameters.Parameters
 
         protected override GH_GetterResult Prompt_Singular(ref GH_VariousView value)
         {
-            throw new System.NotImplementedException();
+            GetOption go = new GetOption();
+            VariousView view;
+            go.SetCommandPrompt("Choose a view type to select.");
+            go.AddOptionEnumList("Selected", ViewType.None);
+            switch (go.Get())
+            {
+                case GetResult.Option:
+                    switch ((ViewType)go.Option().CurrentListOptionIndex)
+                    {
+                        case ViewType.RhinoView:
+                            view = new VariousView(ViewType.RhinoView, go.View().ActiveViewportID);
+                            break;
+                        default:
+                            return GH_GetterResult.cancel;
+                    }
+                    value = new GH_VariousView(view);
+                    return GH_GetterResult.success;
+                default:
+                    return GH_GetterResult.cancel;
+            }
+            
         }
         protected override GH_GetterResult Prompt_Plural(ref List<GH_VariousView> values)
         {
