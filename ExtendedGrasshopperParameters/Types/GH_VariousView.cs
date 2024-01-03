@@ -25,5 +25,19 @@ namespace ExtendedGrasshopperParameters.Types
             else
                 return Value.ToString();
         }
+
+        public override bool CastTo<Q>(ref Q target)
+        {
+            if (typeof(Q).IsAssignableFrom(typeof(GH_Guid)))
+            {
+                if (this.Value == null)
+                    target = default(Q);
+                else
+                    target = (Q)(object)new GH_Guid(Value.ReferenceID);
+                return true;
+            }
+            target = default(Q);
+            return false;
+        }
     }
 }

@@ -39,7 +39,6 @@ namespace ExtendedGrasshopperParameters.Parameters
                             if (go.View() is RhinoPageView)
                             {
                                 RhinoApp.WriteLine($"You cannot set a {ViewType.RhinoPageView} as a {ViewType.RhinoView}.");
-                                value = new GH_VariousView();
                                 return GH_GetterResult.cancel;
                             }
                             view = new VariousView(ViewType.RhinoView, go.View().ActiveViewportID);
@@ -48,19 +47,16 @@ namespace ExtendedGrasshopperParameters.Parameters
                             if (!(go.View() is RhinoPageView))
                             {
                                 RhinoApp.WriteLine($"You cannot set a {ViewType.RhinoView} as a {ViewType.RhinoPageView}.");
-                                value = new GH_VariousView();
                                 return GH_GetterResult.cancel;
                             }
                             view = new VariousView(ViewType.RhinoPageView,go.View().ActiveViewportID);
                             break;
                         default:
-                            value = new GH_VariousView();
                             return GH_GetterResult.cancel;
                     }
                     value = new GH_VariousView(view);
                     return GH_GetterResult.success;
                 default:
-                    value = new GH_VariousView();
                     return GH_GetterResult.cancel;
             }
             
