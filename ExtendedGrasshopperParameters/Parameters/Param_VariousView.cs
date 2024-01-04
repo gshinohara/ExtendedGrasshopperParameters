@@ -10,7 +10,6 @@ using Grasshopper.Kernel;
 using ExtendedGrasshopperParameters.Types;
 using ExtendedGrasshopperParameters.Common;
 using Rhino;
-using Grasshopper.Kernel.Parameters;
 
 namespace ExtendedGrasshopperParameters.Parameters
 {

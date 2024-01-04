@@ -7,7 +7,6 @@ using Grasshopper.Kernel;
 
 using ExtendedGrasshopperParameters.Types;
 using ExtendedGrasshopperParameters.Parameters;
-using Rhino.DocObjects;
 using ExtendedGrasshopperParameters.Common;
 
 namespace ExtendedGrasshopperParameters.Component

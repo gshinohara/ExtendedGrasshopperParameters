@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Linq;
 
 using Rhino;
-using Rhino.Display;
-using Rhino.Geometry;
 
 using Grasshopper.Kernel;
 
