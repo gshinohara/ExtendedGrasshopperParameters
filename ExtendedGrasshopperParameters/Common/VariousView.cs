@@ -30,11 +30,12 @@ namespace ExtendedGrasshopperParameters.Common
 
         internal Guid ReferenceID => _guid;
         internal bool IsReferenced => ReferenceID != Guid.Empty;
+        internal string ViewTypeDescription => _type.ToString();
         internal string Name
         {
             get
             {
-                if (IsReferenced)
+                if (!IsReferenced)
                     return _viewInfo.Name;
                 else
                 {
